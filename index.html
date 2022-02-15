@@ -1,0 +1,550 @@
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" integrity="sha512-4UKI/XKm3xrvJ6pZS5oTRvIQGIzZFoXR71rRBb1y2N+PbwAsKa5tPl2J6WvbEvwN3TxQCm8hMzsl/pO+82iRlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://d3js.org/topojson.v1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+
+
+		<script src="SCRIPT/map.js"></script>
+		<script src="SCRIPT/boxplot.js"></script>
+		<script src="SCRIPT/mds.js"></script>
+		<script src="SCRIPT/parallel.js"></script>
+		<script src="SCRIPT/barchart.js"></script>
+		
+
+		
+        <style type="text/css">
+
+			body{
+				background-color: #121212;
+				fill: white;  
+				color: white;				
+			}
+			
+			#Div_Slider_Year{
+				position:absolute;
+				top: 0%;
+				left: 30%;
+				font-size: 120%;
+				
+			}
+
+			#Select_Deaths{
+				position:absolute;
+				top: 0%;
+				left: 45%;
+				font-size: 120%;
+
+				
+			}
+
+			#Country_Name{
+				position:relative;
+				top:0%;
+				left:0%;
+				width: 20%;
+				font-size: 150%;
+				font-weight: bold;
+
+				
+			}
+
+			#ColumnDeaths{
+				position: relative;
+				top:5%
+			}
+
+			#wrapper_Column_Deaths{
+				position: absolute;
+				top:3%;
+				font-size: 1.6vmin;
+				width: 8.75%;
+				height: 42.59%;
+				background-color: #383838;
+				padding-left: 0.3%;
+				padding-top: 0.3%;
+				padding-bottom: 0.3%;
+				border-style: solid;
+				border-color: #6E6E6E;
+			}
+
+			svg {
+				background-color: #383838;
+				border-style: solid;
+				border-color: #6E6E6E;
+				
+			}
+
+			#container {
+				width: 800px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 20px;
+				padding: 20px;
+				background-color: white;
+				box-shadow: 1px 1px 1px 2px rgb(217, 217, 217);
+                
+			}
+
+			path:hover {
+				fill: #add8e6;
+				cursor:pointer;
+			}
+			
+			#nameDeath{
+				display: inline;
+			}
+
+			h6{
+				display: inline;
+			}
+
+		
+			
+
+			#colorlegendSVG{
+				background-color: #383838;
+				padding-left: 10px;
+				fill: white;  
+    			border-width:solid; 
+			}
+			
+			
+	
+			#colorlegend{
+				position:absolute;
+				right:0%;
+				bottom: 0%;
+				margin-right: 0.4%;
+			}
+		
+			#map{
+				position:absolute;
+				left: 10%;
+				top:3%;
+				width: 50vh;
+				height: 15vh;
+				margin-bottom: 1%;
+				
+			}
+
+			#mds{
+				position: absolute;
+				left: 0.4%;
+				bottom: 0%;
+				
+			
+			}
+		
+			#parallel{
+				position: absolute;
+				left: 46.28%;
+				top: 3%;
+				height: 2%;
+				color: white;
+			}
+
+			#years{
+				margin-left: 9%;
+				margin-top: 2%;
+				width: 30%;
+				margin-right: 10%;
+			}
+
+			#boxplot{
+				position: absolute;
+				float:left;
+				left: 34.65%;
+				top:3%;
+				bottom:0%;
+				
+			}
+
+			#barchartTextHint{
+				position: absolute;
+				top:75%;
+				left:52%;
+			}
+
+			#barchart{
+				position:absolute;
+				bottom:0%;
+				left: 28.7%;
+				margin-top: 1%;	
+				
+			}
+
+			#number_Country_fix{
+				position: absolute;
+				top:45%;
+				left:16%;
+				font-weight: bold;
+			}
+			#number_Country{
+				position: absolute;
+				top:45%;
+				left:27%;
+				font-weight: bold;
+			}
+
+			.point {
+				fill: teal;
+				opacity: 0.8;
+				cursor: pointer;
+			}
+
+
+			#Country_Name_MDS {   
+				position: absolute;           
+				text-align: center;
+			}
+
+			#DivRectStats {   
+				position: absolute;           
+				text-align: center;
+				background-color: white;
+				border-radius: 2px;
+				border-color: black;
+				border-style:solid;
+    			border-width:thin;
+				color:black;
+				padding: 5px;
+				white-space: pre-line;
+				
+			}
+
+			.wrapper{
+                position: absolute;
+                width: 8.2%;
+                height: 34.4%;
+                background-color: #383838;
+                padding: 10px 10px 10px 10px;
+				border-color: #6E6E6E;
+				border-style:solid;
+				left: 90.05%;
+				top: 3%;
+            }
+            .container{
+                position: relative;
+                width: 100%;
+                height: 7%;
+				top: 25%;
+                margin-top: 5px;
+            }
+
+            input[type="range"]{
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                width: 100%;
+                outline: none;
+                position: absolute;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                background-color: transparent;
+                pointer-events: none;
+            }
+			.slider-track{
+                width: 100%;
+                height: 5px;
+                position: absolute;
+                background-color: #d5d5d5;
+                margin: auto;
+                top: -10px;
+                bottom: 0;
+                border-radius: 5px;
+            }
+            input[type="range"]::-webkit-slider-runnable-track{
+                -webkit-appearance: none;
+                height: -7px;
+            }
+            input[type="range"]::-moz-range-track{
+                -moz-appearance: none;
+                height: -7px;
+            }
+            input[type="range"]::-ms-track{
+                appearance: none;
+                height: -7px;
+            }
+            input[type="range"]::-webkit-slider-thumb{
+                -webkit-appearance: none;
+                height: 1.4em;
+                width: 1.4em;
+                background-color: #03DAC5;
+                cursor: pointer;
+                margin-top: -8px;
+                pointer-events: auto;
+                border-radius: 50%;
+            }
+            input[type="range"]::-moz-range-thumb{
+                -webkit-appearance: none;
+                height: 1.4em;
+                width: 1.4em;
+                cursor: pointer;
+                border-radius: 50%;
+                background-color: #03DAC5;
+                pointer-events: auto;
+            }
+            input[type="range"]::-ms-thumb{
+                appearance: none;
+                height: 1.4em;
+                width: 1.4em;
+                cursor: pointer;
+                border-radius: 50%;
+                background-color: #03DAC5;
+                pointer-events: auto;
+            }
+            input[type="range"]:active::-webkit-slider-thumb{
+                background-color: #ffffff;
+                border: 3px solid #03DAC5;
+            }
+
+			#rangeTextParallel{
+				position:absolute;
+				text-align: center;
+				font-weight: bold;
+				left: 2%;
+				top: 15%
+			}
+
+			.values{
+                background-color: #35c2b4;
+                width: 84%;
+                position: relative;
+                margin: auto;
+                margin-bottom: 14%;
+                border-radius: 4px;
+                text-align: center;
+                font-size: 20px;
+				font-weight: bold;
+				top: 28%;
+            }
+            .values:before{
+                content: "";
+                position: absolute;
+                height: 0;
+                width: 0;
+                border-top: 10px solid #35c2b4;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                margin: auto;
+                bottom: -10px;
+                left: 0;
+                right: 0;
+            }
+			
+			#checkYears{
+				opacity: 0;
+				position:absolute;
+				left: 89.5%;
+				top:27%;
+				padding: 0.5%;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			
+		
+		</style>
+    
+    </head>
+    
+	
+	<body>
+		
+
+		<input id="number_of_Country_Selected" type="hidden" value="0"  
+		onchange="Stroke_Country_mds();Stroke_Country_map();Stroke_Country_boxplot();Change_barchart();Change_In_The_ColorLegend();Change_Parallel_Num_countr()"/>
+		<script src="SCRIPT/colorlegend.js"></script>
+
+		<!--<input id="Slider_Year"type="range" value="2005" min="1990" max="2017" oninput="this.nextElementSibling.value = this.value">
+		<output>2005</output>-->
+		<div id="Div_Slider_Year">
+			<b> Select the year: </b>
+			<select id = "Slider_Year" >
+				<option value="1990"> 1990 </option>
+				<option value="1991"> 1991 </option>
+				<option value="1992"> 1992 </option>
+				<option value="1993"> 1993 </option>
+				<option value="1994"> 1994 </option>
+				<option value="1995"> 1995 </option>
+				<option value="1996"> 1996 </option>
+				<option value="1997"> 1997 </option>
+				<option value="1998"> 1998 </option>
+				<option value="1999"> 1999 </option>
+				<option value="2000"> 2000 </option>
+				<option value="2001"> 2001 </option>
+				<option value="2002"> 2002 </option>
+				<option value="2003"> 2003 </option>
+				<option value="2004"> 2004 </option>
+				<option value="2005"> 2005 </option>
+				<option value="2006"> 2006 </option>
+				<option value="2007"> 2007 </option>
+				<option value="2008"> 2008 </option>
+				<option value="2009"> 2009 </option>
+				<option value="2010"> 2010 </option>
+				<option value="2011"> 2011 </option>
+				<option value="2012"> 2012 </option>
+				<option value="2013"> 2013 </option>
+				<option value="2014"> 2014 </option>
+				<option value="2015"> 2015 </option>
+				<option value="2016"> 2016 </option>
+				<option selected="2017" value ="2017" > 2017 </option>
+			</select>
+
+		</div>
+
+		<div id="Select_Deaths">
+			<b> Select the type of death: </b>
+			<select id = "List_Deaths" >
+				<option selected="selected" value ="Unsafe_water_source" > Unsafe water source </option>
+				<option value="Unsafe_sanitation"> Unsafe sanitation </option>
+				<option value="Household_air_pollution_from_solid_fuels"> Household air pollution from solid fuels </option>
+				<option value="Child_wasting"> Child wasting </option>
+				<option value="Low_birth_weight_for_gestation"> Lowbirth weight for gestation </option>
+				<option value="Secondhand_smoke"> Secondhand smoke </option>
+				<option value="Alcohol_use"> Alcohol use </option>
+				<option value="Drug_use"> Drug use </option>
+				<option value="Diet_low_in_fruits"> Diet low in fruits </option>
+				<option value="Unsafe_sex"> Unsafe sex </option>
+				<option value="High_fasting_plasma_glucose"> High fasting plasma glucose </option>
+				<option value="High_body_mass_index"> High body mass index </option>
+				<option value="High_systolic_blood_pressure"> High systolic blood pressure </option>
+				<option value="Smoking"> Smoking </option>
+				<option value="Iron_deficiency"> Iron deficiency </option>
+				<option value="Vitamin_A_deficiency"> Vitamin A deficiency </option>
+				<!--<option value="Low_bone_mineral_density"> Low bone mineral density </option>-->
+				<option value="Air_pollution"> Air pollution </option>
+				<option value="Outdoor_air_pollution"> Outdoor air pollution </option>
+				<option value="Diet_high_in_sodium"> Diet high in sodium </option>
+			</select>
+
+		</div>
+
+		
+
+		<div id= "wrapper_Column_Deaths">
+			<text id="Country_Name">Country name</text>
+			<div id="ColumnDeaths">
+				<h5 id="nameDeath">Unsafe water source:</h5>
+				<h6 id="Unsafe_water_source">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Unsafe sanitation:</h5>
+				<h6 id="Unsafe_sanitation">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Household air pollution:</h5>
+				<h6 id="Household_air_pollution_from_solid_fuels">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Child wasting:</h5>
+				<h6 id="Child_wasting">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Low birth weight:</h5>
+				<h6 id="Low_birth_weight_for_gestation">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Secondhand smoke:</h5>
+				<h6 id="Secondhand_smoke">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Alcohol use:</h5>
+				<h6 id="Alcohol_use">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Drug use:</h5>
+				<h6 id="Drug_use">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Diet low in fruits:</h5>
+				<h6 id="Diet_low_in_fruits">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Unsafe segs:</h5>
+				<h6 id="Unsafe_sex">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">High plasma glucose:</h5>
+				<h6 id="High_fasting_plasma_glucose">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">High BMI:</h5>
+				<h6 id="High_body_mass_index">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">High sys. blood press.:</h5>
+				<h6 id="High_systolic_blood_pressure">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Smoking:</h5>
+				<h6 id="Smoking">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Iron deficiency:</h5>
+				<h6 id="Iron_deficiency">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Vit A deficiency:</h5>
+				<h6 id="Vitamin_A_deficiency">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Air pollution:</h5>
+				<h6 id="Air_pollution">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Outdoor air pollution:</h5>
+				<h6 id="Outdoor_air_pollution">NULL</h6>
+				<br/>
+				<h5 id="nameDeath">Diet high in sodium:</h5>
+				<h6 id="Diet_high_in_sodium">NULL</h6>
+			</div>
+		</div>
+		
+		<div id="map"></div>
+
+		
+			<div id="boxplot"></div>
+	
+
+		<div id="mds"></div>
+
+		<div id="parallel"></div>
+
+		<div id="colorlegend"></div>
+
+		
+
+		<div class="wrapper">
+			<text id="rangeTextParallel">Range of years for the Parallel Plot:</text>
+			<div class="values">
+				<span id="range1">
+					2000
+				</span>
+				<span> &dash; </span>
+				<span id="range2">
+					2017
+				</span>
+			</div>
+			<div class="container">
+				<div class="slider-track"></div>
+				<input type="range" min="1990" max="2017" value="2000" id="slider-1" oninput="slideOne()">
+				<input type="range" min="1990" max="2017" value="2017" id="slider-2" oninput="slideTwo()">
+			</div>
+		</div>
+		<div id="checkYears">
+			<label for="years">Select years to predict: (only works when year 2017 is selected)     </label>
+			<select name="years" id="years">
+				<!--<option value="" selected disabled hidden>Choose here</option>-->
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+		</div>
+
+		<div id="barchart"></div>
+
+		<text id="barchartTextHint">Select one or more countries from Map or MDS to activate this vizualization</text>
+		<text id="number_Country_fix">Number of selected countries:</text>
+		<text id="number_Country">0/10</text>
+		
+		<script type="text/javascript">
+			Change_barchart();
+			Change_In_The_ColorLegend();
+			Change_Parallel_Num_countr();
+		</script>
+
+	</body>
+
+
+</html>
