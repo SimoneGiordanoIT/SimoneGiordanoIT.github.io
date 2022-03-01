@@ -170,7 +170,7 @@ d3.csv("DATASET/Deaths_EU.csv").then(function(data){
             })
             .style("fill", "white")
             .attr("stroke", "black")
-
+    setTimeout(Stroke_Country_boxplot, 500)
     }
 
     Change_In_Boxplot();

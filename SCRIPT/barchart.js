@@ -12,7 +12,7 @@ function Change_barchart(){
         country_parsed = document.getElementById(id_country).getAttribute("value")
         SelectedCountries.push(country_parsed)
     }
-
+    //SelectedCountries = SelectedCountries.sort()
 
     var margin = {top: 0, right: 20, bottom: 0, left: 200},
         width = (screenWidth/2) - margin.left - margin.right,
@@ -81,14 +81,7 @@ function Change_barchart(){
 
         
 
-        function isCountrySelected(c){
-            for(var k = 0; k < SelectedCountries.length; k++){
-                if(c == SelectedCountries[k]){
-                    return true
-                }       
-            }
-            return false
-        }
+        
 
         function NormalizeAndRetrieve(relevantVal){
             
@@ -110,19 +103,19 @@ function Change_barchart(){
             //relevant values è una matrice CountryXMorte, io devo passare a MorteXCountry, oltre a normalizzare
 
             var NormalizedValues = new Array(Array_Deaths.length);
-
             var sum = 0
             for( var i = 0; i < Array_Deaths.length; i++){
                 NormalizedValues[i] = new Array(SelectedCountries.length); 
                 sum = 0
                 for (var j = 0; j < SelectedCountries.length; j++){
                     if (relevantVal[j][Array_Deaths[i]] >= 0){
-                        NormalizedValues[i][SelectedCountries[j]] = (relevantVal[j][Array_Deaths[i]]/ArrayTotals[i])*100   //il normalized avrà le countries in ordine alfabetico
+                        
+                        NormalizedValues[i][SelectedCountries[j]] = (relevantVal[j][Array_Deaths[i]]/ArrayTotals[i])*100  
                     }
                     else{
-                        NormalizedValues[i][SelectedCountries[j]] = 0.0
+                        NormalizedValues[i][j] = 0.0
                     }
-                    sum += NormalizedValues[i][SelectedCountries[j]]
+                    sum += NormalizedValues[i][j]
                 }
                 //console.log(sum)
             }
@@ -153,13 +146,15 @@ function Change_barchart(){
                 RelevantValues[i] = new Array(Array_Deaths.length + 3);  //ha nome country e  entity e year in piu
             }
             
-            var j = 0
-            for( var i = 0; i < data.length; i++ ){
-                if(data[i].Year == year_Selected && isCountrySelected(data[i].Country)){
-                    RelevantValues[j] = data[i]
-                    j++
+            
+            for( var i = 0; i < SelectedCountries.length; i++ ){
+                for (var k=0; k < data.length; k++){
+                    if(data[k].Year == year_Selected && data[k].Country == SelectedCountries[i]){
+                        RelevantValues[i] = data[k]
+                    }
                 }
             }
+            //console.log(RelevantValues)
 
             var svg = d3.select("#barchart")
                 .append("svg")
@@ -194,7 +189,6 @@ function Change_barchart(){
             svg.append("g")
                 .call(d3.axisLeft(y).tickSizeOuter(0));
 
-                
             var color = d3.scaleOrdinal()
                 .domain(SelectedCountries)  
                 .range(DistinctColors)
@@ -224,16 +218,19 @@ function Change_barchart(){
                 .data(stackedData)
                 .enter().append("g")  //loop
                     .attr("fill", function(d) { 
-                        return color(d.key); })
+                        return color(
+                            d.key); })
                     .attr("countr", function(d){
                         return d.key
                     })    
                     .selectAll("rect")   //selecta i rettangoli
-                    .data(function(d) {  return d; }) 
+                    .data(function(d) {  
+                        return d; }) 
                     .enter()  //loop  //entra nell' array di una Nazione
                     
                     .append("rect")  //aggiunge un rettangolo
                         .attr("x", function(d) { 
+                    
                             //console.log(d[0]) //originale (fino a 100 o meno)
                             //console.log(x(d[0])) //scalato con width
                             return x(d[0]); })  //d riguarda valori di una morte per quella Nazione

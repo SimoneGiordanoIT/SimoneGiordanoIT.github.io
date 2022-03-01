@@ -186,13 +186,13 @@ function Change_Parallel_Num_countr(){
             //to generate parallel according 
             var firstYear = sliderOne.value;
             var secondYear = sliderTwo.value;
-
             if(secondYear == 2017){
                 var visibleYearsPrection = document.getElementById("checkYears");
                 visibleYearsPrection.style.opacity = "1";
             }else{
                 var visibleYearsPrection = document.getElementById("checkYears");
                 visibleYearsPrection.style.opacity = "0";
+                years_dropList.value = 0;
             }
             
             //extract years between first one and second one selected. Then iterate to populate the array years with the years in the selected 

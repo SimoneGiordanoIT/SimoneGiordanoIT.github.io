@@ -251,7 +251,7 @@ d3.csv("DATASET/Deaths_EU.csv").then(function(data){
     
     svg.select("#legend")
         .call(legend);
-
+    setTimeout(Stroke_Country_map, 500)
     }
 
     Change_In_The_Map();
@@ -277,7 +277,15 @@ function Stroke_Country_map(){
             var numb_C = numero_Country_Brushed.concat("/10")
             return numb_C
         })
-
+    
+    if(numero_Country_Brushed == 10){
+        var redText = document.getElementById("number_Country") 
+        redText.style["color"] = "red";
+    }
+    if(numero_Country_Brushed < 10){
+        var whiteText = document.getElementById("number_Country")
+        whiteText.style["color"] = "white";
+    }
 
     if (numero_Country_Brushed > 0){
         for (let i=0; i < map_svg.length; i++){

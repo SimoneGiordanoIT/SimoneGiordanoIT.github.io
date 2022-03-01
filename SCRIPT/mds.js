@@ -217,7 +217,7 @@ d3.csv("DATASET/Deaths_EU.csv").then(function(data){
                         for(var i=0;i<points_data.length;i++){
                             var x_Point = x(points_data[i][0])
                             var y_point = y(points_data[i][1])
-                                if(Starting_x <= x_Point && Starting_y <= Final_y){
+                                if(Starting_x <= x_Point && Starting_y <= y_point){
                                     if(Final_x >= x_Point && Final_y >= y_point){
                                         var name_Country = Check_Country(Starting_x,points_data[i],points_data);
                                         Countries_Brushed.push(name_Country)
@@ -340,7 +340,7 @@ d3.csv("DATASET/Deaths_EU.csv").then(function(data){
                                 .style('opacity', 0);
                             div_Name_C.html('')
                         });
-
+        setTimeout(Stroke_Country_mds, 500)
     }
 
     Change_In_MDS();
